@@ -45,7 +45,7 @@ void loop() {
   }
 
   //rpi state debounce
-  if (((millis() - sys_on_timer) >= 500) && (power_out_state == 1)) {  //system "off" for more than 500ms?
+  if (((millis() - sys_on_timer) >= 500) && (ign_state == 0)) {  //system "off" for more than 500ms?
     digitalOutput("power_out", 0); //turn off rpi power
   }
 
