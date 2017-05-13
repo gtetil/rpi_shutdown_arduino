@@ -29,7 +29,7 @@ void setup() {
 void loop() {
 
   //read analog inputs
-  if (analogRead(current_sense_pin) > 6) {  //if greater than 6 (20mA), then system is "on"
+  if (analogRead(current_sense_pin) > 4) {  //if greater than 4 (12mA), then system is "on"
     system_state = 1;
   }
   else {
