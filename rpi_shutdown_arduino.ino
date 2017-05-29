@@ -1,14 +1,13 @@
 //digital input pins
 int ign_input_pin = 0;
+int rpi_state_pin = 2;
 
 //digital output pins
 int power_out_pin = 1;
 
-//analog input pins
-int current_sense_pin = A1;
-
 //digital input states
 int ign_state = 0;
+int rpi_state = 0;
 
 //digital output state;
 int power_out_state = 0;
@@ -28,19 +27,12 @@ void setup() {
 
 void loop() {
 
-  //read analog inputs
-  if (analogRead(current_sense_pin) > 4) {  //if greater than 4 (12mA), then system is "on"
-    system_state = 1;
-  }
-  else {
-    system_state = 0;
-  }
-
   //read digital inputs
   ign_state = !digitalRead(ign_input_pin);
+  rpi_state = digitalRead(rpi_state_pin);
 
   //check rpi state
-  if (system_state == 1) {
+  if (rpi_state == 1) {
     sys_on_timer = millis(); //if system is considered on, then keep resetting timer
   }
 
