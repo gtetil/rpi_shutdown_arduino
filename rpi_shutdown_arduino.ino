@@ -1,3 +1,6 @@
+
+
+
 //digital input pins
 int ign_input_pin = 0;
 int rpi_state_pin = 2;
@@ -37,7 +40,7 @@ void loop() {
   }
 
   //rpi state debounce
-  if (((millis() - sys_on_timer) >= 500) && (ign_state == 0)) {  //system "off" for more than 500ms?
+  if (((millis() - sys_on_timer) >= 5000) && (ign_state == 0)) {  //system "off" for more than 5000ms?
     digitalOutput("power_out", 0); //turn off rpi power
   }
 
