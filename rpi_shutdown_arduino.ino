@@ -1,6 +1,4 @@
 
-
-
 //digital input pins
 int ign_input_pin = 0;
 int rpi_state_pin = 2;
@@ -21,6 +19,7 @@ int system_state = 0;
 //misc
 unsigned long sys_on_timer = millis();
 unsigned long ignition_timer = millis();
+int prev_rpi_state;
 
 void setup() {
   //setup digital outputs and inputs
@@ -34,13 +33,14 @@ void loop() {
   ign_state = !digitalRead(ign_input_pin);
   rpi_state = digitalRead(rpi_state_pin);
 
-  //check rpi state
-  if (rpi_state == 1) {
+  //check rpi heartbeat
+  if (rpi_state != prev_rpi_state) {
+    prev_rpi_state = rpi_state;
     sys_on_timer = millis(); //if system is considered on, then keep resetting timer
   }
 
   //rpi state debounce
-  if (((millis() - sys_on_timer) >= 5000) && (ign_state == 0)) {  //system "off" for more than 5000ms?
+  if (((millis() - sys_on_timer) >= 3000) && (ign_state == 0)) {  //ign off and heartbeat lost?
     digitalOutput("power_out", 0); //turn off rpi power
   }
 
